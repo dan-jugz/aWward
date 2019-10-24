@@ -7,3 +7,14 @@ class UploadForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude = ('design', 'usability', 'creativity', 'content', 'overall', 'posted', 'user' )
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('profilepic','bio', 'prefname', 'contact')
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model=Rating
+        exclude=['overall_score','profile','project']
+        
