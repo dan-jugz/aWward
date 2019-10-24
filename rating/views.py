@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models  import Project
+from .models  import Project,Profile
 
 # Create your views here.
 def index(request):
@@ -8,3 +8,8 @@ def index(request):
     runners=Project.objects.all()[:4]
     
     return render(request, 'index.html', locals())
+
+
+def profile(request):
+
+    return render(request, 'profile.html', locals())
