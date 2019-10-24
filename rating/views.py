@@ -63,6 +63,7 @@ def new_project(request):
         form = UploadForm()
     return render(request, 'new_project.html',  {'form': form,'profile':profile})
 
+
 @login_required(login_url='/accounts/login')
 def project(request):
     current_user = request.user
@@ -121,7 +122,8 @@ def project(request):
                 rating.save()
     else:
         form = RatingForm()
-    return render(request, 'project.html', {"project":project,"profile":profile,"ratings":ratings,"form":form})
+    return render(request, "project.html",{"project":project,"profile":profile,"ratings":ratings,"form":form, "message":message, 'total_design':total_design, 'total_usability':total_usability, 'total_creativity':total_creativity, 'total_content':total_content})
+
 
 
 @login_required(login_url='/accounts/login')
@@ -166,4 +168,16 @@ class ProjectList(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
+
+class ProjectDescription(APIView):
+    
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+        except Project.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        serializers = ProjectSerializer(project)
+        return Response(serializers.data)
