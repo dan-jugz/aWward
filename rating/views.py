@@ -77,4 +77,16 @@ def project(request):
     overall_score = 0
 
     ratings = Rating.objects.filter(project=project_id)
-    return render(request, 'project.html', {"project":project,"profile":profile,"ratings":ratings})
+
+    if request.method == 'POST':
+        form = RatingForm(request.POST, request.FILES) 
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.project= project
+            rating.profile = profile
+            if not Rating.objects.filter(profile=profile, project=project).exists():
+                rating.overall_score = (rating.design+rating.usability+rating.creativity+rating.content)/4
+                rating.save()
+    else:
+        form = RatingForm()
+    return render(request, 'project.html', {"project":project,"profile":profile,"ratings":ratings,"form":form})
