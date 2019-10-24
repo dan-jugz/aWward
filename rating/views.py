@@ -17,21 +17,24 @@ def index(request):
 
 @login_required(login_url='/accounts/login')
 def profile(request):
-    
+    current_user=request.user
+    profile =Profile.objects.get(user=current_user)
+    projects = Project.objects.filter(user=current_user)
+    my_profile = Profile.objects.get(user=current_user)
     return render(request, 'profile.html', locals())
 
 
 @login_required(login_url='/accounts/login')
 def edit_profile(request):
-
+    current_user = request.user
     return render(request, 'edit_profile.html', locals())
 
 @login_required(login_url='/accounts/login')
 def new_project(request):
-
+    current_user = request.user
     return render(request, 'new_project.html', locals())
 
 @login_required(login_url='/accounts/login')
 def project(request):
-
+    current_user = request.user
     return render(request, 'project.html', locals())
