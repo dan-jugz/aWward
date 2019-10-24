@@ -61,4 +61,20 @@ def new_project(request):
 @login_required(login_url='/accounts/login')
 def project(request):
     current_user = request.user
-    return render(request, 'project.html', locals())
+
+    profile =Profile.objects.get(user=current_user)
+    message = "Thank you for voting"
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        raise ObjectDoesNotExist()
+
+   
+    total_design = 0
+    total_usability = 0
+    total_creativity = 0
+    total_content = 0
+    overall_score = 0
+
+    ratings = Rating.objects.filter(project=project_id)
+    return render(request, 'project.html', {"project":project,"profile":profile,"ratings":ratings})
