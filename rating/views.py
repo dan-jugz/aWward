@@ -78,6 +78,33 @@ def project(request):
 
     ratings = Rating.objects.filter(project=project_id)
 
+    if len(ratings) > 0:
+        users = len(ratings)
+    else:
+        users = 1
+    
+    design = list(Rating.objects.filter(project=project_id).values_list('design',flat=True))
+    usability = list(Rating.objects.filter(project=project_id).values_list('usability',flat=True))
+    creativity = list(Rating.objects.filter(project=project_id).values_list('creativity',flat=True))
+    content = list(Rating.objects.filter(project=project_id).values_list('content',flat=True))
+    
+    
+    total_design=sum(design)/users
+    total_usability=sum(usability)/users
+    total_creativity=sum(creativity)/users
+    total_content=sum(content)/users
+
+
+    overall_score=(total_design+total_content+total_usability+total_creativity)/4
+
+    project.design = total_design
+    project.usability = total_usability
+    project.creativity = total_creativity
+    project.content = total_content
+    project.overall = overall_score
+
+    project.save()
+    
     if request.method == 'POST':
         form = RatingForm(request.POST, request.FILES) 
         if form.is_valid():
