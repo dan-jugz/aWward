@@ -13,3 +13,18 @@ def index(request):
 def profile(request):
 
     return render(request, 'profile.html', locals())
+
+
+def edit_profile(request):
+
+    return render(request, 'edit_profile.html', locals())
+
+
+def new_project(request):
+
+    return render(request, 'new_project.html', locals())
+
+
+def project(request):
+
+    return render(request, 'project.html', locals())
