@@ -15,21 +15,23 @@ def index(request):
     return render(request, 'index.html', locals())
 
 
+@login_required(login_url='/accounts/login')
 def profile(request):
-
+    
     return render(request, 'profile.html', locals())
 
 
+@login_required(login_url='/accounts/login')
 def edit_profile(request):
 
     return render(request, 'edit_profile.html', locals())
 
-
+@login_required(login_url='/accounts/login')
 def new_project(request):
 
     return render(request, 'new_project.html', locals())
 
-
+@login_required(login_url='/accounts/login')
 def project(request):
 
     return render(request, 'project.html', locals())
