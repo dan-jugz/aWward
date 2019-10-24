@@ -122,4 +122,13 @@ def project(request):
 @login_required(login_url='/accounts/login')
 def search(request):
     current_user = request.user
-    return render(request, 'search.html', locals())
+    profile =Profile.objects.get(user=current_user)
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        projects = Project.search_project(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html', {"message":message, "projects":projects, 'profile':profile})
+    else:
+        message = "Please enter search term"
+        return render(request, 'search.html', {"message":message, "projects":projects,'profile':profile})
