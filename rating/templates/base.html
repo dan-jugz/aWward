@@ -12,6 +12,7 @@
   {% endif %}
 
   {% block styles %}
+  {% bootstrap_css%}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -19,15 +20,17 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-  {% endblock %}
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'css/rate.css' %}">
+    {% endblock styles %}
   
 </head>
 <body>
   {% include 'navbar.html' %}
   
-    {% block content %} {%endblock%}
+  {% block content %} {%endblock%}
 
-    {% block scripts %}
+  {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   {{block.super}}
   <!-- JQuery -->
@@ -39,15 +42,13 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script>
   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://rawgit.com/kottenator/jquery-circle-progress/1.2.2/dist/circle-progress.js"></script>
   <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-  <script>
-  function copyToClipboard(element) {
-    $(element).select();
-    document.execCommand("copy");
-  }
-  </script>
-    {% endblock %}
+  <script src="{% static 'js/awards.js'%}"></script>
+
+  {% endblock scripts %}
 </body>
 </html>
