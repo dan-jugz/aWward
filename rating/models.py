@@ -11,3 +11,13 @@ class categories(models.Model):
 
     def save_category(self):
         self.save()
+
+
+class technologies(models.Model):
+    technologies = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.technologies
+
+    def save_technology(self):
+        self.save()
