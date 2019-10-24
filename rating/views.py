@@ -104,7 +104,7 @@ def project(request):
     project.overall = overall_score
 
     project.save()
-    
+
     if request.method == 'POST':
         form = RatingForm(request.POST, request.FILES) 
         if form.is_valid():
@@ -117,3 +117,9 @@ def project(request):
     else:
         form = RatingForm()
     return render(request, 'project.html', {"project":project,"profile":profile,"ratings":ratings,"form":form})
+
+
+@login_required(login_url='/accounts/login')
+def search(request):
+    current_user = request.user
+    return render(request, 'search.html', locals())
