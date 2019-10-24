@@ -169,6 +169,20 @@ class ProjectList(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProfileDescription(APIView):
+
+    def get_profile(self, pk):
+        try:
+            return Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        profile = self.get_profile(pk)
+        serializers = ProfileSerializer(profile)
+        return Response(serializers.data)
+
+
 class ProjectDescription(APIView):
     
     def get_project(self, pk):
